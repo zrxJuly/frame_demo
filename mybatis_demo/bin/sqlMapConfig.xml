@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<!-- 加载配置文件,默认路径为classpath下 -->
+	<properties resource="jdbc.properties" />
+	
+	<!-- 配置别名,这样在UserMapper.xml中就可以使用User代替com.zrxjuly.mybatis.pojo.User -->
+	<typeAliases>
+		<!-- 如果实体类较多的话，这样配就很麻烦
+		<typeAlias type="com.zrxjuly.mybatis.pojo.User" alias="User" />
+		-->
+		<!-- 使用package,这样把该包下的实体类都配置成别名，别名名称为类名。
+		eg：如果 com.zrxjuly.mybatis.pojo包下有个User的实体类，则别名为user或User.
+		 -->
+		<package name="com.zrxjuly.mybatis.pojo"/>
+	</typeAliases>
+	
+	<!-- 和spring整合后environments配置将废除 -->
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	
+	<!-- 映射器  指定方式有三种-->
+	<mappers>
+		<!-- 方式1.使用resource -->
+		<mapper resource="com/zrxjuly/mybatis/pojo/UserMapper.xml" />
+		<!-- 方式2.使用class,指定写sql语句的文件的位置,并且pojo的类名要和mapper文件的类名一致 -->
+		<!-- <mapper class="com.zrxjuly.mybatis.pojo.UserMapper"/> -->
+	</mappers>
+</configuration>

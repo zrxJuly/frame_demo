@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper  
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zrxjuly.mybatis.mapper.UserMapper">
+	<!-- 通过id查询一个用户. 
+		parameterType:代表传入sql语句中的参数的类型.
+		parameterMap:已经废弃.
+		返回类型用resultType或resultMap表示.
+			resultType:自动映射。前提：实体类中的属性名要与数据库表中的字段名对应。
+			resultMap:手动映射-当实体类中的属性名与数据库表中的字段名不一致时使用。
+			#{参数}：参数名称可以任意取
+	-->
+	<select id="findUserById" parameterType="Integer" resultType="User">
+		select * from user where id = #{id}
+	</select>
+	
+	<!-- 根据用户名称模糊查询用户列表
+	注意以下区别：
+		#{}: select * from user where id = ?; 占位符时用#,此时？=='参数'
+		${}: select * form user where username like '%${参数}%';  字符串拼接时用$
+			使用 select * from user where username like "%"#{value}"%"防止sql注入
+	${}中的参数名称必须是value.
+	 -->
+	 <select id="findUserByUsername" parameterType="String" resultType="com.zrxjuly.mybatis.pojo.User">
+	 	select * from user where username like "%"#{value}"%"
+	 </select>
+	 
+	 <!-- 添加用户 -->
+	  <insert id="insertUser" parameterType="com.zrxjuly.mybatis.pojo.User">
+	  	<!-- 要想返回给操作层主键值，则加selectKey.
+	  	selectKey表示返回的主键，keyProperty：主键的属性名称，resultType：返回的类型， 
+	  	order：若主键类型为Integer类型，自增长，此时order用AFTER；若主键为char/varchar类型，order用BEFORE -->
+	  	<selectKey keyProperty="id" resultType="Integer" order="AFTER">
+	  		select LAST_INSERT_ID()
+	  	</selectKey>
+	  	insert into user (username,birthday,address,sex)
+	  	values (#{username},#{birthday},#{address},#{sex})
+	  </insert>
+	  
+	  <!-- 修改用户. -->
+	  <select id="updateUser" parameterType="com.zrxjuly.mybatis.pojo.User">
+	  	update user
+	  	set username=#{username},birthday=#{birthday},address=#{address},sex=#{sex}
+	  	where id=#{id}
+	  </select>
+	  
+	  <!-- 删除用户. -->
+	  <delete id="deleteUserById" parameterType="Integer">
+	  	delete from user where id=#{id}
+	  </delete>
+</mapper>
