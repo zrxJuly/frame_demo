@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.zrxjuly.ibatis</groupId>
+	<artifactId>ibatis-demo</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- 版本属性. -->
+	<properties>
+		<ibatis.version>2.1.0.565</ibatis.version>
+		<mysql_connector.version>5.1.38</mysql_connector.version>
+		<junit.version>4.0</junit.version>
+	</properties>
+	
+	<dependencies>
+		<!-- iBatis依赖. -->
+		<dependency>
+			<groupId>com.ibatis</groupId>
+			<artifactId>ibatis-sqlmap</artifactId>
+			<version>${ibatis.version}</version>
+		</dependency>
+		<!-- <dependency>
+			<groupId>org.apache.ibatis</groupId>
+			<artifactId>ibatis-core</artifactId>
+			<version>${ibatis.version}</version>
+		</dependency> -->
+		
+		<!--mysql驱动依赖. -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql_connector.version}</version>
+		</dependency>
+		
+		<!-- junit依赖. -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+		</dependency>
+	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.8</source><!-- 源代码开发版本 -->
+					<target>1.8</target><!-- Java编译版本 -->
+					<encoding>UTF-8</encoding><!-- 项目的编码 -->
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

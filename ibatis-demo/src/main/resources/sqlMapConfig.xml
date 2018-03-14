@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"  
+"http://ibatis.apache.org/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+	<!-- http://blog.csdn.net/catch_li/article/details/51892782
+		1.cacheModelsEnabled:是否启用SqlMapClient上的缓存机制.
+		2.enhancementEnabled:是否针对POJO启用字节码增强机制以提升getter/setter的调用效能，避免使用Java Reference所带来的
+			性能开销。同时也为lazy Loading 带来了极大的性能提升.
+		3.lazyLoadingEnabled：启用或禁用SqlMapClient的所有延迟加载，调试程序时使用.
+		4.maxRequest:同时执行sql语句的最大线程数。大于这个值的线程将阻塞 直到另一个线程执行完成。
+			不同的DBMS有不同的限制值，但任何数据库都有这些限制。该值应为maxTransaction的10倍，且关系如下：
+				maxSessions < maxRequest > maxTranactions
+			减少该值可提高性能.
+		5.maxSessions：同一时间内活动的最大session数，一个session可以是代码请求的显式session，
+			也可以是当线程使用SqlMapClient实例（即执行一条语句）自动获得的session. 
+			maxTransaction <= maxSessions < maxRequest
+		6.maxTransactions：同时进入SqlMapClient.startTransaction()的最大线程数.
+			maxTransactions <= maxSessions < maxRequests
+			减少该值可提高性能.
+		7.useStatementNamespaces: 如果启用本属性，必须使用全限定名来引用mapped statement。
+			Mapped statement的 全限定名由sql-map的名称和mapped-statement的名称合成.
+			
+	 -->
+	<!-- 启用namespace. -->
+	<settings useStatementNamespaces="true" cacheModelsEnabled="true" 
+		lazyLoadingEnabled="true" enhancementEnabled="true"/>
+	
+	<!-- 
+		1.transactionManager的type：JDBC,JTA,EXTERNAL
+		2.dataSource的type:SIMPLE,DBCP,JNDI
+			simple：用于测试
+			dbcp:采用dbcp做数据源
+			jndi：使用app server提供的数据源.
+		dataSource一般是在spring中创建或管理，所以和spring集成时，很少使用ibatis的dataSource节点.
+	 -->
+	<!-- 配置数据库连接信息. -->
+	<transactionManager type="JDBC">
+		<dataSource type="SIMPLE">
+			<property name="JDBC.Driver" value="com.mysql.jdbc.Driver"/>
+			<property name="JDBC.ConnectionURL" value="jdbc:mysql://127.0.0.1:3306/test?characterEncoding=UTF-8"/>
+			<property name="JDBC.Username" value="root"/>
+			<property name="JDBC.Password" value="rongxiang"/>
+		</dataSource>
+	</transactionManager>
+	
+	<sqlMap resource="com/zrxjuly/ibatis/config/UserMapper.xml"/>
+</sqlMapConfig>

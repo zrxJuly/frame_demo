@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" 
+					"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+	<!-- 设置别名 -->
+	<typeAlias alias="User" type="com.zrxjuly.ibatis.pojo.User"/>
+	
+	<!-- http://blog.51cto.com/lavasoft/83902
+		parameterClass：SQL入参，指定参数的完整类名（包括包路径），可通过别名避免每次重复书写冗长的类名.
+			插入语句入参：parameterClass="类名"
+			查询语句入参：可设定类别名、map、ibatis支持的原生类型（String、int、long等），
+				当只有一个原生类型入参时，则在SQL中用value关键字来引用.
+			map是最强大的入参方式，任何入参方式都可以转换为这种入参方式。
+		返回值参数类型：resultClass，resultMap.
+			当结果集列名和类属性名完全对应时，使用resultClass指定查询结果类型。若有些列名不对应，则可以在sql中使用as重命名.
+			当查询结果列名和类属性名对应不上时，应选择resultMap指定查询结果集类型，
+		resultClass：结果类，
+			resultClass取值：
+				1.resultClass="Integer"//基本类型,或者是java.lang.Integer
+				2.resultClass="com.sfbest.product.bean.ProductPicture"//Model对象
+				3.resultClass="string"//基本类型,java.lang.String
+				4.resultClass="long"//基本类型,java.lang.long
+				5.resultClass="java.util.HashMap"//map集合
+		resultMap：结果映射，是一个对java bean的映射，需先定义xml的映射后，才可以引用.
+			将查询的结果集绑定到映射对象的属性上.
+		
+	 -->
+	<!-- <resultMap class="User" id="selectAllUser" /> -->
+	
+	<select id="selectAllUser" resultClass="User"> 
+		SELECT id,name,score
+		  FROM userinfo
+	</select>
+	
+	<select id="selectUserById" parameterClass="int" resultClass="User">
+		SELECT id,name,score
+		  FROM userinfo
+		<dynamic prepend="where"> <!-- 动态sql -->
+			<isNotEmpty> <!-- 判断值是否为空 -->
+				id = #id#
+			</isNotEmpty>
+		</dynamic>
+		
+		<!-- SELECT id,name,score
+		  FROM userinfo
+		 WHERE id = #id# -->
+	</select>
+	
+	<delete id="deleteUserById" parameterClass="int">
+		DELETE FROM userinfo
+			  WHERE id = #id#
+	</delete>
+	
+	<insert id="addUser" parameterClass="User">
+		INSERT INTO userinfo(id,name,score)
+		     VALUES (#id#, #name#, #score#)
+	</insert>
+	
+	<update id="updateUser" parameterClass="User">
+		UPDATE userinfo
+		   SET name = #name#, score = #score#
+		 WHERE id = #id#
+	</update>
+	
+	<!-- 模糊查询. -->
+	<select id="selectUsers" parameterClass="String" resultClass="User">
+		SELECT id,name,score
+		  FROM userinfo
+		 WHERE name LIKE '%$aString$%'
+		    OR score LIKE '%$aString$%'
+	</select>
+	
+	<!-- 
+		返回值参数有两种类型：对象类型resultClass；resultMap
+		当结果集列名和类属性完全对应时，应使用resultClass指定查询结果类型.若有些列名不对应，则可以在sql中使用as重命名.
+		当查询结果列名和类属性名对应不上时，应选择resultMap指定查询结果集类型，
+	 -->
+	<!-- 
+	<parameterMap class="" id=""></parameterMap>
+	<procedure id=""></procedure>
+	
+	<sql id=""></sql>：sql片段
+	<statement id=""></statement>
+	-->
+	
+</sqlMap>
