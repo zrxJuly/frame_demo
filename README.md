@@ -6,3 +6,5 @@
 该项目是学习mybatis整合spring时做的练习。
 ### springmvc-demo
 该项目是学习springmvc时做的练习。
+### ibatis-demo
+该项目是学习ibatis框架时做的练习。
