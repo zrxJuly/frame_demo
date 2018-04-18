@@ -13,6 +13,10 @@
     <servlet-name>Demo1</servlet-name>
     <servlet-class>com.zrxjuly.validate.Demo1</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>vcode</servlet-name>
+    <servlet-class>com.zrxjuly.validate.Vcode</servlet-class>
+  </servlet>
 
 
   <servlet-mapping>
@@ -22,6 +26,10 @@
   <servlet-mapping>
     <servlet-name>Demo1</servlet-name>
     <url-pattern>/demo1</url-pattern>
+  </servlet-mapping>	
+  <servlet-mapping>
+    <servlet-name>vcode</servlet-name>
+    <url-pattern>/vcode</url-pattern>
   </servlet-mapping>	
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>

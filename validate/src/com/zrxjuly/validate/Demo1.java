@@ -2,6 +2,7 @@ package com.zrxjuly.validate;
 
 import java.beans.PropertyDescriptor;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Enumeration;
@@ -20,12 +21,44 @@ public class Demo1 extends HttpServlet {
 		// 解决post方式提交乱码.
 		request.setCharacterEncoding("utf-8");
 		
+		// 解决 传值到前端乱码
+		response.setCharacterEncoding("utf-8");
+		
 		// request.getParameterMap()方法获取表单值.
-		test1(request); 
+		//test1(request); 
 		// request.getParameterNames()方法获取表单值.
-		test2(request);
+		//test2(request);
 		// 使用框架
-		test3(request);
+		//test3(request);
+		test4(request, response);
+	}
+	
+	/**
+	 * ajax提交表单，实现无刷新，返回到前端，传值，对页面进行操作.
+	 * @param request
+	 * @param response
+	 * @throws IOException
+	 */
+	public void test4(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		// 前端获取值到后端，可以存到string数组中，也可以赋给string，然后再分割
+		String[] hobby = request.getParameterValues("hobby"); // [篮球,编程,乒乓球,]
+		// 赋给string，再分割
+		String hobbies = request.getParameter("hobby");//篮球,编程,乒乓球,
+		String[] h = hobbies.split(",");//[篮球, 编程, 乒乓球]
+		System.out.println(hobbies);
+		System.out.println(h[0]);
+		System.out.println(hobby);
+		PrintWriter out = response.getWriter();
+		String sendHTML = "<script type='text/javascript'>"
+				+ "alert('成功！');"
+				+ "$('#username').hide();"
+				+ "$('#willshow').show();"
+				+ "</script>";
+		out.write(sendHTML);
+		out.flush();
+		out.close();
 	}
 	
 	/*
