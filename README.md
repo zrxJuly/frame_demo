@@ -12,3 +12,5 @@
 该项目是学习shiro的案例
 ### shiro-spring
 该项目是学习shiro时整合spring的案例
+### validate
+登录时验证码demo
