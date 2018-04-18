@@ -13,4 +13,6 @@
 ### shiro-spring
 该项目是学习shiro时整合spring的案例
 ### validate
-登录时验证码demo
+1.登录时验证码demo
+2.记住密码操作 方式一：使用HTML5新特性localStorage
+			 方式二：使用Cookie存储
